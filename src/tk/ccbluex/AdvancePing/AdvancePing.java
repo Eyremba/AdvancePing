@@ -42,7 +42,7 @@ public class AdvancePing extends JavaPlugin {
 		System.out.println("[" + NAME + "] Plugin is starting.");
 		FileConfiguration configuration = getConfig();
 		configuration.options().header(NAME + " by CCBlueX");
-		configuration.addDefault("checkPerTicks", 20);
+		configuration.addDefault("checkPerTicks", 20 * 60);
 		configuration.options().copyDefaults(true);
 		saveConfig();
 		
