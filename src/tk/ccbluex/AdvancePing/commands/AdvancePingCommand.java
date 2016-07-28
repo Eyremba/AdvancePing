@@ -60,6 +60,13 @@ public class AdvancePingCommand implements CommandExecutor, Listener {
 						if(sender instanceof Player) {
 							Player player = (Player) sender;
 							Inventory inventory = Bukkit.createInventory(null, InventoryType.HOPPER, AdvancePing.PREFIX + " | " + offlinePlayer.getName());
+							
+							ItemStack playerStack = new ItemStack(Material.SKULL_ITEM, 1, (short) 0, (byte) 3);
+							ItemMeta playerMeta = playerStack.getItemMeta();
+							playerMeta.setDisplayName("§7Player: " + offlinePlayer.getName());
+							playerStack.setItemMeta(playerMeta);
+							inventory.addItem(playerStack);
+							
 							ItemStack lastPingStack = new ItemStack(Material.PAPER);
 							ItemMeta lastPingMeta = lastPingStack.getItemMeta();
 							lastPingMeta.setDisplayName("§eLast Ping: " + lastPing);
