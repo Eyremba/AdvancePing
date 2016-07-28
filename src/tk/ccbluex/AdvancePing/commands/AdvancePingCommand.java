@@ -4,6 +4,8 @@
 package tk.ccbluex.AdvancePing.commands;
 
 import java.io.File;
+import java.net.InetSocketAddress;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -59,31 +61,52 @@ public class AdvancePingCommand implements CommandExecutor, Listener {
 						
 						if(sender instanceof Player) {
 							Player player = (Player) sender;
-							Inventory inventory = Bukkit.createInventory(null, InventoryType.HOPPER, AdvancePing.PREFIX + " | " + offlinePlayer.getName());
+							Inventory inventory = Bukkit.createInventory(null, InventoryType.BREWING, AdvancePing.PREFIX + " | " + offlinePlayer.getName());
 							
 							ItemStack playerStack = new ItemStack(Material.SKULL_ITEM, 1, (short) 0, (byte) 3);
 							ItemMeta playerMeta = playerStack.getItemMeta();
 							playerMeta.setDisplayName("§7Player: " + offlinePlayer.getName());
 							playerStack.setItemMeta(playerMeta);
-							inventory.addItem(playerStack);
+							inventory.setItem(3, playerStack);
 							
 							ItemStack lastPingStack = new ItemStack(Material.PAPER);
 							ItemMeta lastPingMeta = lastPingStack.getItemMeta();
 							lastPingMeta.setDisplayName("§eLast Ping: " + lastPing);
 							lastPingStack.setItemMeta(lastPingMeta);
-							inventory.addItem(lastPingStack);
+							inventory.setItem(0, lastPingStack);
 							
 							ItemStack averagepingStack = new ItemStack(Material.PAPER);
 							ItemMeta averagepingMeta = averagepingStack.getItemMeta();
 							averagepingMeta.setDisplayName("§eAverage Ping: " + average);
 							averagepingStack.setItemMeta(averagepingMeta);
-							inventory.addItem(averagepingStack);
+							inventory.setItem(1, averagepingStack);
+							
+							ItemStack infoStack = new ItemStack(Material.PAPER);
+							ItemMeta infoMeta = averagepingStack.getItemMeta();
+							infoMeta.setDisplayName("§eInformations");
+							List<String> informations = new ArrayList<>();
+							if(offlinePlayer.isOnline()) {
+								Player player2 = Bukkit.getPlayer(offlinePlayer.getName());
+								try{
+									InetSocketAddress inetAddress = player2.getAddress();
+									informations.add("§bIP-Address: " + inetAddress.getHostName());
+								}catch(Exception exception) {
+									informations.add("§cInformations can't load");
+									informations.add("§cExeption: ");
+									informations.add(exception.getMessage());
+								}
+							}else{
+								informations.add("§cInformations can't load because the player is not online.");
+							}
+							infoMeta.setLore(informations);
+							infoStack.setItemMeta(infoMeta);
+							inventory.setItem(2, infoStack);
 							
 							ItemStack closeStack = new ItemStack(Material.BARRIER);
 							ItemMeta closeMeta = closeStack.getItemMeta();
 							closeMeta.setDisplayName("§cClose");
 							closeStack.setItemMeta(closeMeta);
-							inventory.setItem(inventory.getSize() - 1, closeStack);
+							inventory.setItem(4, closeStack);
 							
 							for(int i = 0; i < inventory.getSize(); i++) {
 								if(inventory.getItem(i) == null) {
