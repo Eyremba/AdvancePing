@@ -15,7 +15,7 @@ import tk.ccbluex.AdvancePing.commands.AdvancePingCommand;
  */
 public class AdvancePing extends JavaPlugin {
 	
-	public static AdvancePing averagePing;
+	public static AdvancePing advancePing;
 	
 	public static String NAME;
 	public static String VERSION;
@@ -28,7 +28,7 @@ public class AdvancePing extends JavaPlugin {
 	 * 
 	 */
 	public AdvancePing() {
-		averagePing = this;
+		advancePing = this;
 	}
 	
 	/* (non-Javadoc)
