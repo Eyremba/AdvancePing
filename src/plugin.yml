@@ -1,0 +1,8 @@
+name: 'AdvancePing'
+version: 1.0
+authors: [CCBlueX]
+
+main: tk.ccbluex.AdvancePing.AdvancePing
+commands:
+  ping:
+    aliases: [pong]
