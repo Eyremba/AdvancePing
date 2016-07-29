@@ -8,7 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.md_5.bungee.api.ChatColor;
-import tk.ccbluex.AdvancePing.commands.AdvancePingCommand;
+import tk.ccbluex.AdvancePing.commands.PingCommand;
 
 /**
  * @author Marco
@@ -68,7 +68,7 @@ public class AdvancePing extends JavaPlugin {
 		PREFIX = ChatColor.translateAlternateColorCodes('&', configuration.getString("messages.prefix")) + " §e";
 		
 		scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new PingReceiver(), 0, configuration.getInt("checkPerTicks"));
-		getCommand("ping").setExecutor(new AdvancePingCommand());
+		getCommand("ping").setExecutor(new PingCommand());
 		System.out.println("[" + NAME + "] Plugin started.");
 		super.onEnable();
 	}

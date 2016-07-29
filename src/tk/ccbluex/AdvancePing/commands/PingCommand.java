@@ -33,12 +33,12 @@ import tk.ccbluex.AdvancePing.utils.MathUtils;
  * @author Marco
  *
  */
-public class AdvancePingCommand implements CommandExecutor, Listener {
+public class PingCommand implements CommandExecutor, Listener {
 	
 	/**
 	 * 
 	 */
-	public AdvancePingCommand() {
+	public PingCommand() {
 		Bukkit.getPluginManager().registerEvents(this, AdvancePing.advancePing);
 	}
 	
