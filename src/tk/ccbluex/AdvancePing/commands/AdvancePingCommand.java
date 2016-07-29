@@ -228,7 +228,7 @@ public class AdvancePingCommand implements CommandExecutor, Listener {
 		
 		ItemStack pageStack = new ItemStack(Material.PAPER);
 		ItemMeta pageMeta = pageStack.getItemMeta();
-		pageMeta.setDisplayName("§c" + AdvancePing.advancePing.getMessage("messages.Page") + ": " + page);
+		pageMeta.setDisplayName("§c" + AdvancePing.advancePing.getMessage("Page") + ": " + page);
 		pageStack.setItemMeta(pageMeta);
 		inventory.setItem(47, pageStack);
 		
