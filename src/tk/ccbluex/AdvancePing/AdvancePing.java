@@ -8,6 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import net.md_5.bungee.api.ChatColor;
+import tk.ccbluex.AdvancePing.commands.AdvancePingCommand;
 import tk.ccbluex.AdvancePing.commands.PingCommand;
 
 /**
@@ -62,12 +63,15 @@ public class AdvancePing extends JavaPlugin {
 		configuration.addDefault("messages.NextPage", "Next Page");
 		configuration.addDefault("messages.PreviousPage", "Previous Page");
 		configuration.addDefault("messages.Page", "Page");
+		configuration.addDefault("messages.Startreload", "Reloading...");
+		configuration.addDefault("messages.Successfulreload", "Configs was successful reloaded.");
 		configuration.options().copyDefaults(true);
 		saveConfig();
 		
 		PREFIX = ChatColor.translateAlternateColorCodes('&', configuration.getString("messages.prefix")) + " §e";
 		
 		scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new PingReceiver(), 0, configuration.getInt("checkPerTicks"));
+		getCommand("advanceping").setExecutor(new AdvancePingCommand());
 		getCommand("ping").setExecutor(new PingCommand());
 		System.out.println("[" + NAME + "] Plugin started.");
 		super.onEnable();

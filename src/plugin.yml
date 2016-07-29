@@ -4,5 +4,7 @@ authors: [CCBlueX]
 
 main: tk.ccbluex.AdvancePing.AdvancePing
 commands:
+  advanceping:
+    aliases: [ap]
   ping:
     aliases: [pong]
