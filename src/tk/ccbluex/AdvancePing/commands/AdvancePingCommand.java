@@ -173,7 +173,7 @@ public class AdvancePingCommand implements CommandExecutor, Listener {
 			try{
 				InetSocketAddress inetAddress = player2.getAddress();
 				if(withIP)
-					informations.add("§b" + AdvancePing.advancePing.getMessage("IPAdress") + ": " + inetAddress.getHostName());
+					informations.add("§b" + AdvancePing.advancePing.getMessage("IPAddress") + ": " + inetAddress.getHostName());
 			}catch(Exception exception) {
 				informations.add("§cInformations can't load");
 				informations.add("§cExeption: ");

@@ -57,7 +57,7 @@ public class AdvancePing extends JavaPlugin {
 		configuration.addDefault("messages.Player", "Player");
 		configuration.addDefault("messages.Players", "Players");
 		configuration.addDefault("messages.Informations", "Informations");
-		configuration.addDefault("messages.IPAdress", "IP-Address");
+		configuration.addDefault("messages.IPAddress", "IP-Address");
 		configuration.addDefault("messages.informationscantload", "Informations can't load because the player is not online.");
 		configuration.addDefault("messages.NextPage", "Next Page");
 		configuration.addDefault("messages.PreviousPage", "Previous Page");
