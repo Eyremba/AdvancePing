@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import net.md_5.bungee.api.ChatColor;
 import tk.ccbluex.AdvancePing.commands.AdvancePingCommand;
 
 /**
@@ -43,8 +44,28 @@ public class AdvancePing extends JavaPlugin {
 		FileConfiguration configuration = getConfig();
 		configuration.options().header(NAME + " by CCBlueX");
 		configuration.addDefault("checkPerTicks", 20 * 60);
+		//Messages
+		configuration.addDefault("messages.prefix", "&7[&cADVANCEPING&7]");
+		configuration.addDefault("messages.NoPermissionsToExecute", "You don't have permmission to execute this command.");
+		configuration.addDefault("messages.PlayerNotFound", "The player can't found.");
+		configuration.addDefault("messages.NotInDatabase", "The player is not in the database.");
+		configuration.addDefault("messages.YouMustBeAPlayer", "You must be a Player.");
+		configuration.addDefault("messages.Lastping", "Last Ping");
+		configuration.addDefault("messages.Averageping", "Average Ping");
+		configuration.addDefault("messages.Close", "Close");
+		configuration.addDefault("messages.Back", "Back");
+		configuration.addDefault("messages.Player", "Player");
+		configuration.addDefault("messages.Players", "Players");
+		configuration.addDefault("messages.Informations", "Informations");
+		configuration.addDefault("messages.IPAdress", "IP-Address");
+		configuration.addDefault("messages.informationscantload", "Informations can't load because the player is not online.");
+		configuration.addDefault("messages.NextPage", "Next Page");
+		configuration.addDefault("messages.PreviousPage", "Previous Page");
+		configuration.addDefault("messages.Page", "Page");
 		configuration.options().copyDefaults(true);
 		saveConfig();
+		
+		PREFIX = ChatColor.translateAlternateColorCodes('&', configuration.getString("messages.prefix")) + " §e";
 		
 		scheduler = Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new PingReceiver(), 0, configuration.getInt("checkPerTicks"));
 		getCommand("ping").setExecutor(new AdvancePingCommand());
@@ -62,5 +83,9 @@ public class AdvancePing extends JavaPlugin {
 		Bukkit.getScheduler().cancelTask(scheduler);
 		System.out.println("[" + NAME + "] Plugin stopped.");
 		super.onDisable();
+	}
+	
+	public String getMessage(String name) {
+		return ChatColor.translateAlternateColorCodes('&', getConfig().getString("messages." + name));
 	}
 }

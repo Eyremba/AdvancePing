@@ -55,7 +55,7 @@ public class AdvancePingCommand implements CommandExecutor, Listener {
 						Player player = (Player) sender;
 						player.openInventory(getPlayersMenu(1));
 					}else
-						sender.sendMessage(AdvancePing.PREFIX + "You must be a Player.");
+						sender.sendMessage(AdvancePing.PREFIX + AdvancePing.advancePing.getMessage("YouMustBeAPlayer"));
 					return true;
 				}
 				
@@ -77,17 +77,17 @@ public class AdvancePingCommand implements CommandExecutor, Listener {
 						}
 						
 						sender.sendMessage("§e--------------- " + AdvancePing.PREFIX + "§e---------------");
-						sender.sendMessage("§cLast Ping: " + lastPing);
-						sender.sendMessage("§cAverage Ping: " + averagePing);
+						sender.sendMessage("§c" + AdvancePing.advancePing.getMessage("Lastping") + ": " + lastPing);
+						sender.sendMessage("§c" + AdvancePing.advancePing.getMessage("Averageping") + ": " + averagePing);
 						sender.sendMessage("§e--------------- v" + AdvancePing.VERSION + " §e------------------------");
 					}else
-						sender.sendMessage(AdvancePing.PREFIX + "The player is not in the database.");
+						sender.sendMessage(AdvancePing.PREFIX + AdvancePing.advancePing.getMessage("NotInDatabase"));
 				}else
-					sender.sendMessage("AdvancePing.PREFIX + The player can't found.");
+					sender.sendMessage(AdvancePing.PREFIX + AdvancePing.advancePing.getMessage("PlayerNotFound"));
 			}else
 				sender.sendMessage(AdvancePing.PREFIX + "/ping <player>");
 		}else
-			sender.sendMessage(AdvancePing.PREFIX + "You don't have permmission to execute this command.");
+			sender.sendMessage(AdvancePing.PREFIX + AdvancePing.advancePing.getMessage("NoPermissionsToExecute"));
 		return true;
 	}
 	
@@ -104,20 +104,20 @@ public class AdvancePingCommand implements CommandExecutor, Listener {
 					return;
 				
 				String displayName = event.getCurrentItem().getItemMeta().getDisplayName();
-				if(displayName != null && displayName.equalsIgnoreCase("§cClose"))
+				if(displayName != null && displayName.equalsIgnoreCase("§c" + AdvancePing.advancePing.getMessage("Close")))
 					event.getWhoClicked().closeInventory();
 				
-				if(displayName != null && displayName.equalsIgnoreCase("§cBack"))
+				if(displayName != null && displayName.equalsIgnoreCase("§c" + AdvancePing.advancePing.getMessage("Back")))
 					event.getWhoClicked().openInventory(getPlayersMenu(1));
 				
-				if(inventory.getName().equalsIgnoreCase(AdvancePing.PREFIX + " | PLAYERS")) {
-					if(displayName != null && displayName.equalsIgnoreCase("§cNEXT PAGE")) {
+				if(inventory.getName().equalsIgnoreCase(AdvancePing.PREFIX + " | " + AdvancePing.advancePing.getMessage("Players"))) {
+					if(displayName != null && displayName.equalsIgnoreCase("§c" + AdvancePing.advancePing.getMessage("NextPage"))) {
 						int page = Integer.parseInt(inventory.getItem(47).getItemMeta().getDisplayName().split(": ")[1]);
 						page++;
 						event.getWhoClicked().openInventory(getPlayersMenu(page));
 					}
 					
-					if(displayName != null && displayName.equalsIgnoreCase("§cPREVIOUS PAGE")) {
+					if(displayName != null && displayName.equalsIgnoreCase("§c" + AdvancePing.advancePing.getMessage("PreviousPage"))) {
 						int page = Integer.parseInt(inventory.getItem(47).getItemMeta().getDisplayName().split(": ")[1]);
 						page--;
 						if(page == 0)
@@ -148,39 +148,39 @@ public class AdvancePingCommand implements CommandExecutor, Listener {
 		
 		ItemStack playerStack = new ItemStack(Material.SKULL_ITEM, 1, (short) 0, (byte) 3);
 		ItemMeta playerMeta = playerStack.getItemMeta();
-		playerMeta.setDisplayName("§7Player: " + offlinePlayer.getName());
+		playerMeta.setDisplayName("§7" + AdvancePing.advancePing.getMessage("Player") + ": " + offlinePlayer.getName());
 		playerStack.setItemMeta(playerMeta);
 		inventory.setItem(3, playerStack);
 		
 		ItemStack lastPingStack = new ItemStack(Material.PAPER);
 		ItemMeta lastPingMeta = lastPingStack.getItemMeta();
-		lastPingMeta.setDisplayName("§eLast Ping: " + lastPing);
+		lastPingMeta.setDisplayName("§e" + AdvancePing.advancePing.getMessage("Lastping") + ": " + lastPing);
 		lastPingStack.setItemMeta(lastPingMeta);
 		inventory.setItem(0, lastPingStack);
 		
 		ItemStack averagepingStack = new ItemStack(Material.PAPER);
 		ItemMeta averagepingMeta = averagepingStack.getItemMeta();
-		averagepingMeta.setDisplayName("§eAverage Ping: " + averagePing);
+		averagepingMeta.setDisplayName("§e" + AdvancePing.advancePing.getMessage("Averageping") + ": " + averagePing);
 		averagepingStack.setItemMeta(averagepingMeta);
 		inventory.setItem(1, averagepingStack);
 		
 		ItemStack infoStack = new ItemStack(Material.PAPER);
 		ItemMeta infoMeta = averagepingStack.getItemMeta();
-		infoMeta.setDisplayName("§eInformations");
+		infoMeta.setDisplayName("§e" + AdvancePing.advancePing.getMessage("Informations"));
 		List<String> informations = new ArrayList<>();
 		if(offlinePlayer.isOnline()) {
 			Player player2 = Bukkit.getPlayer(offlinePlayer.getName());
 			try{
 				InetSocketAddress inetAddress = player2.getAddress();
 				if(withIP)
-					informations.add("§bIP-Address: " + inetAddress.getHostName());
+					informations.add("§b" + AdvancePing.advancePing.getMessage("IPAdress") + ": " + inetAddress.getHostName());
 			}catch(Exception exception) {
 				informations.add("§cInformations can't load");
 				informations.add("§cExeption: ");
 				informations.add(exception.getMessage());
 			}
 		}else{
-			informations.add("§cInformations can't load because the player is not online.");
+			informations.add("§c" + AdvancePing.advancePing.getMessage("informationscantload"));
 		}
 		infoMeta.setLore(informations);
 		infoStack.setItemMeta(infoMeta);
@@ -188,7 +188,7 @@ public class AdvancePingCommand implements CommandExecutor, Listener {
 		
 		ItemStack closeStack = new ItemStack(Material.BARRIER);
 		ItemMeta closeMeta = closeStack.getItemMeta();
-		closeMeta.setDisplayName(fromPlayersMenu ? "§cBack" : "§cClose");
+		closeMeta.setDisplayName(fromPlayersMenu ? "§c" + AdvancePing.advancePing.getMessage("Back") : "§c" + AdvancePing.advancePing.getMessage("Close"));
 		closeStack.setItemMeta(closeMeta);
 		inventory.setItem(4, closeStack);
 		
@@ -206,29 +206,29 @@ public class AdvancePingCommand implements CommandExecutor, Listener {
 	
 	@SuppressWarnings("deprecation")
 	private Inventory getPlayersMenu(int page) {
-		Inventory inventory = Bukkit.createInventory(null, 54, AdvancePing.PREFIX + " | PLAYERS");
+		Inventory inventory = Bukkit.createInventory(null, 54, AdvancePing.PREFIX + " | " + AdvancePing.advancePing.getMessage("Players"));
 		
 		ItemStack closeStack = new ItemStack(Material.BARRIER);
 		ItemMeta closeMeta = closeStack.getItemMeta();
-		closeMeta.setDisplayName("§cClose");
+		closeMeta.setDisplayName("§c" + AdvancePing.advancePing.getMessage("Close"));
 		closeStack.setItemMeta(closeMeta);
 		inventory.setItem(53, closeStack);
 		
 		ItemStack nextPageStack = new ItemStack(Material.ARROW);
 		ItemMeta nextPageMeta = nextPageStack.getItemMeta();
-		nextPageMeta.setDisplayName("§cNEXT PAGE");
+		nextPageMeta.setDisplayName("§c" + AdvancePing.advancePing.getMessage("NextPage"));
 		nextPageStack.setItemMeta(nextPageMeta);
 		inventory.setItem(45, nextPageStack);
 		
 		ItemStack previousPageStack = new ItemStack(Material.ARROW);
 		ItemMeta previousPageMeta = previousPageStack.getItemMeta();
-		previousPageMeta.setDisplayName("§cPREVIOUS PAGE");
+		previousPageMeta.setDisplayName("§c" + AdvancePing.advancePing.getMessage("PreviousPage"));
 		previousPageStack.setItemMeta(previousPageMeta);
 		inventory.setItem(46, previousPageStack);
 		
 		ItemStack pageStack = new ItemStack(Material.PAPER);
 		ItemMeta pageMeta = pageStack.getItemMeta();
-		pageMeta.setDisplayName("§cPAGE: " + page);
+		pageMeta.setDisplayName("§c" + AdvancePing.advancePing.getMessage("messages.Page") + ": " + page);
 		pageStack.setItemMeta(pageMeta);
 		inventory.setItem(47, pageStack);
 		
