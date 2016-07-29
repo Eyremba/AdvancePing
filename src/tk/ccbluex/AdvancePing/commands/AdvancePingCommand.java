@@ -72,7 +72,7 @@ public class AdvancePingCommand implements CommandExecutor, Listener {
 						
 						if(sender instanceof Player) {
 							Player player = (Player) sender;
-							player.openInventory(getPlayerMenu(offlinePlayer, lastPing, averagePing, false));
+							player.openInventory(getPlayerMenu(offlinePlayer, lastPing, averagePing, false, player.hasPermission(AdvancePing.NAME + ".see.ip")));
 							return true;
 						}
 						
@@ -134,7 +134,7 @@ public class AdvancePingCommand implements CommandExecutor, Listener {
 							int lastPing = configuration.getInt(offlinePlayer.getUniqueId().toString() + ".lastPing");
 							List<Integer> pings = configuration.getIntegerList(offlinePlayer.getUniqueId().toString() + ".pings");
 							int averagePing = MathUtils.AverageCalculate(pings);
-							event.getWhoClicked().openInventory(getPlayerMenu(Bukkit.getOfflinePlayer(displayName), lastPing, averagePing, true));
+							event.getWhoClicked().openInventory(getPlayerMenu(Bukkit.getOfflinePlayer(displayName), lastPing, averagePing, true, event.getWhoClicked().hasPermission(AdvancePing.NAME + ".see.ip")));
 						}
 					}
 				}
@@ -143,7 +143,7 @@ public class AdvancePingCommand implements CommandExecutor, Listener {
 	}
 	
 	@SuppressWarnings("deprecation")
-	private Inventory getPlayerMenu(OfflinePlayer offlinePlayer, int lastPing, int averagePing, boolean fromPlayersMenu) {
+	private Inventory getPlayerMenu(OfflinePlayer offlinePlayer, int lastPing, int averagePing, boolean fromPlayersMenu, boolean withIP) {
 		Inventory inventory = Bukkit.createInventory(null, InventoryType.BREWING, AdvancePing.PREFIX + " | " + offlinePlayer.getName());
 		
 		ItemStack playerStack = new ItemStack(Material.SKULL_ITEM, 1, (short) 0, (byte) 3);
@@ -172,7 +172,8 @@ public class AdvancePingCommand implements CommandExecutor, Listener {
 			Player player2 = Bukkit.getPlayer(offlinePlayer.getName());
 			try{
 				InetSocketAddress inetAddress = player2.getAddress();
-				informations.add("§bIP-Address: " + inetAddress.getHostName());
+				if(withIP)
+					informations.add("§bIP-Address: " + inetAddress.getHostName());
 			}catch(Exception exception) {
 				informations.add("§cInformations can't load");
 				informations.add("§cExeption: ");
